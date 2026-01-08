@@ -1,6 +1,7 @@
 import fs, { mkdirSync } from "fs";
 import path from "path";
 import { globSync } from "glob";
+import { pathToFileURL } from "url";
 
 /**
  * PathUtils
@@ -50,5 +51,23 @@ export default class PathUtils {
         }
 
         return filesMap;
+    }
+
+    static async loadExtensions(folder) {
+
+        const files = PathUtils.readFolder(folder);
+
+        const extensions = [];
+
+        for (const file of files.values()) {
+
+            const mod = await import(pathToFileURL(file.path));
+
+            const ext = mod.default;
+
+            extensions.push(typeof ext === "function" ? ext() : ext);
+        }
+
+        return extensions;
     }
 }

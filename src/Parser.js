@@ -5,6 +5,8 @@ import mustache from "mustache";
 
 import PathUtils from "./utils/PathUtils.js";
 
+const extensions = await PathUtils.loadExtensions("./content/resources/extensions/**.js")
+
 export default class Parser {
 
     constructor() {
@@ -14,14 +16,12 @@ export default class Parser {
             tables: true,
             metadata: true,
             parseImgDimensions: true,
-            extensions: []
+            extensions
         });
 
         this.cssMap = PathUtils.readFolder('./content/resources/styles/**.**');
         this.templateMap = PathUtils.readFolder('./content/resources/templates/**.**');
         this.partialsMap = PathUtils.readFolder('./content/resources/templates/partials/**.**');
-
-        this.loadExtensions();
     }
 
     applyTemplate({ metadata }) {
@@ -52,23 +52,6 @@ export default class Parser {
             removeStyleTags: true,
             preserveFontFaces: false
         });
-    }
-
-    loadExtensions() {
-
-        const files = PathUtils.readFolder("./content/resources/extensions");
-
-        console.log(files)
-        // const files = fs.readdirSync(dir).filter(f => f.endsWith(".js"));
-        // const extensions = [];
-
-        // for (const file of files) {
-        //     const mod = await import(pathToFileURL(path.join(dir, file)));
-        //     const ext = mod.default;
-        //     extensions.push(typeof ext === "function" ? ext() : ext);
-        // }
-
-        // return extensions;
     }
 
     parse(path) {
