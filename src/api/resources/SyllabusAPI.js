@@ -1,3 +1,5 @@
+import HttpClient from "../HttpClient.js";
+
 import Logger from "../../utils/Logger.js";
 
 export default class SyllabusAPI {
