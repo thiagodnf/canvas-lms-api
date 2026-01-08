@@ -8,7 +8,7 @@ export default class PageAPI {
         this.httpClient = new HttpClient();
     }
 
-    async create(title, body, published = false) {
+    async create(title, body, settings = {}) {
 
         Logger.debug("Creating " + title)
 
@@ -16,7 +16,7 @@ export default class PageAPI {
             wiki_page: {
                 title,
                 body,
-                published
+                published: settings.published || false
             }
         }
 
@@ -25,13 +25,14 @@ export default class PageAPI {
         return await this.httpClient.post(url, payload);
     }
 
-    async update(title_url, body) {
+    async update(title_url, body, settings = {}) {
 
         Logger.debug("Updating " + title_url)
 
         const payload = {
             wiki_page: {
-                body
+                body,
+                published: settings.published || false
             }
         }
 
@@ -41,7 +42,6 @@ export default class PageAPI {
     }
 
     async fetchByTitle(title) {
-
 
         Logger.debug("Fetching " + title)
 
@@ -54,14 +54,14 @@ export default class PageAPI {
         return rows.filter(r => r.title.trim().toLowerCase() === title.trim().toLowerCase());
     }
 
-    async sync(title, content) {
+    async sync(title, content, settings = {}) {
 
         const pages = await this.fetchByTitle(title);
 
         if (pages.length === 0) {
-            await this.create(title, content);
+            await this.create(title, content, settings);
         } else if (pages.length === 1) {
-            await this.update(pages[0].url, content);
+            await this.update(pages[0].url, content, settings);
         } else {
             throw new Error(`The page search returned > 1 page for "${title}"`);
         }
