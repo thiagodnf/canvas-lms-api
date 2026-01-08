@@ -36,7 +36,7 @@ export default class Parser {
 
         const rendered = mustache.render(content, view, partials);
 
-        return this.makeHtml(rendered);
+        return this.makeHtml(rendered).html;
     }
 
     applyCSS(html, styles = []) {
