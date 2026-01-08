@@ -1,16 +1,15 @@
-import Logger from "../../utils/Logger.js";
 import HttpClient from "../HttpClient.js";
 
 export default class PageAPI {
 
-    constructor(options = {}) {
-        this.canvasCourseId = options.canvasCourseId;
-        this.httpClient = new HttpClient();
+    constructor(options) {
+
+        this.httpClient = new HttpClient(options);
+
+        this.baseUrl = `/api/v1/courses/${options.canvasCourseId}/pages`;
     }
 
     async create(title, body, settings = {}) {
-
-        Logger.info("Creating " + title)
 
         const payload = {
             wiki_page: {
@@ -20,14 +19,10 @@ export default class PageAPI {
             }
         }
 
-        const url = `/api/v1/courses/${this.canvasCourseId}/pages`;
-
-        return await this.httpClient.post(url, payload);
+        return await this.httpClient.post(`${this.baseUrl}`, payload);
     }
 
-    async update(title_url, body, settings = {}) {
-
-        Logger.info("Updating " + title_url)
+    async update(urlOrId, body, settings = {}) {
 
         const payload = {
             wiki_page: {
@@ -36,18 +31,14 @@ export default class PageAPI {
             }
         }
 
-        const url = `/api/v1/courses/${this.canvasCourseId}/pages/${title_url}`;
-
-        return await this.httpClient.put(url, payload);
+        return await this.httpClient.put(`${this.baseUrl}/${urlOrId}`, payload);
     }
 
     async fetchByTitle(title) {
 
-        Logger.info("Fetching " + title)
-
         const titleEncoded = encodeURIComponent(title);
 
-        const url = `/api/v1/courses/${this.canvasCourseId}/pages?search_term=${titleEncoded}`;
+        const url = `${this.baseUrl}?search_term=${titleEncoded}`;
 
         const rows = await this.httpClient.get(url);
 
@@ -61,7 +52,7 @@ export default class PageAPI {
         if (pages.length === 0) {
             await this.create(title, content, settings);
         } else if (pages.length === 1) {
-            await this.update(pages[0].url, content, settings);
+            await this.update(pages[0].page_id, content, settings);
         } else {
             throw new Error(`The page search returned > 1 page for "${title}"`);
         }

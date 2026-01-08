@@ -20,6 +20,11 @@
     },
     "dependencies": {
         "dotenv": "^17.2.3",
+        "glob": "^13.0.0",
+        "js-yaml": "^4.1.1",
+        "juice": "^11.1.0",
+        "mustache": "^4.2.0",
+        "showdown": "^2.1.0",
         "winston": "^3.19.0"
     }
 }

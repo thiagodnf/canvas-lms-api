@@ -1,19 +1,18 @@
 export default class HttpClient {
 
-    constructor() {
+    constructor({ canvasApiUrl, canvasApiToken }) {
 
-        this.CANVAS_API_URL = process.env.CANVAS_API_URL || "";
-        this.CANVAS_API_TOKEN = process.env.CANVAS_API_TOKEN || "";
+        this.canvasApiUrl = canvasApiUrl;
 
         this.headers = {
-            "Authorization": `Bearer ${this.CANVAS_API_TOKEN}`,
+            "Authorization": `Bearer ${canvasApiToken}`,
             "Content-Type": "application/json",
         };
     }
 
     async get(url) {
 
-        const resource = `${this.CANVAS_API_URL}${url}`;
+        const resource = `${this.canvasApiUrl}${url}`;
 
         const res = await fetch(resource, {
             method: "GET",
@@ -25,7 +24,7 @@ export default class HttpClient {
 
     async post(url, payload = {}) {
 
-        const resource = `${this.CANVAS_API_URL}${url}`;
+        const resource = `${this.canvasApiUrl}${url}`;
 
         const res = await fetch(resource, {
             method: "POST",
@@ -38,7 +37,7 @@ export default class HttpClient {
 
     async put(url, payload = {}) {
 
-        const resource = `${this.CANVAS_API_URL}${url}`;
+        const resource = `${this.canvasApiUrl}${url}`;
 
         const res = await fetch(resource, {
             method: "PUT",
