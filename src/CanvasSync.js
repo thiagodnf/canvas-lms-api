@@ -18,6 +18,7 @@ export default class CanvasSync {
         PathUtils.createFolders("./content/pages");
         PathUtils.createFolders("./content/assignments");
         PathUtils.createFolders("./content/resources/styles");
+        PathUtils.createFolders("./content/resources/extensions");
         PathUtils.createFolders("./content/resources/templates");
         PathUtils.createFolders("./content/resources/templates/partials");
 
