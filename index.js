@@ -1,5 +1,11 @@
-import PageAPI from "./src/api/canvas/PageAPI.js";
+import CanvasSync from "./src/CanvasSync.js";
 
-// await new PageAPI().sync("title", "tete")
+const canvasSync = new CanvasSync({
+    canvasApiUrl: "",
+    canvasApiToken: "",
+    canvasCourseId: ""
+});
 
-export { PageAPI };
+await canvasSync.syncPages();
+
+export { CanvasSync };
