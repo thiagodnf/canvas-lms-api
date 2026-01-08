@@ -1,11 +1,13 @@
 import { createLogger, format, transports } from "winston";;
 
+import Config from "./Config.js";
+
 const { combine } = format;
 
 export default class Logger {
 
     static logger = createLogger({
-        level: process.env.LOG_LEVEL || "info",
+        level: Config.LOG_LEVEL,
         format: combine(
             format.colorize(),
             format.simple()

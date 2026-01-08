@@ -1,7 +1,5 @@
-import * as dotenv from "dotenv";
-
 import PageAPI from "./src/api/canvas/PageAPI.js";
 
-dotenv.config();
+// await new PageAPI().sync("title", "tete")
 
 export { PageAPI };

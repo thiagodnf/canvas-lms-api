@@ -1,7 +1,8 @@
 import Logger from "../../utils/Logger.js";
 import HttpClient from "../HttpClient.js";
+import Config from "../../utils/Config.js";
 
-const CANVAS_COURSE_ID = process.env.CANVAS_COURSE_ID;
+const COURSE_ID = Config.CANVAS_COURSE_ID;
 
 export default class PageAPI {
 
@@ -21,7 +22,7 @@ export default class PageAPI {
             }
         }
 
-        const url = `/api/v1/courses/${CANVAS_COURSE_ID}/pages`;
+        const url = `/api/v1/courses/${COURSE_ID}/pages`;
 
         return await this.httpClient.post(url, payload);
     }
@@ -36,18 +37,19 @@ export default class PageAPI {
             }
         }
 
-        const url = `/api/v1/courses/${CANVAS_COURSE_ID}/pages/${title_url}`;
+        const url = `/api/v1/courses/${COURSE_ID}/pages/${title_url}`;
 
         return await this.httpClient.put(url, payload);
     }
 
     async fetchByTitle(title) {
 
+
         Logger.debug("Fetching " + title)
 
         const titleEncoded = encodeURIComponent(title);
 
-        const url = `/api/v1/courses/${CANVAS_COURSE_ID}/pages?search_term=${titleEncoded}`;
+        const url = `/api/v1/courses/${COURSE_ID}/pages?search_term=${titleEncoded}`;
 
         const rows = await this.httpClient.get(url);
 
