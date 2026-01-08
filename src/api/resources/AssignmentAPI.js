@@ -45,12 +45,12 @@ export default class AssignmentAPI {
 
     async sync(title, content, settings = {}) {
 
-        const pages = await this.fetchByTitle(title);
+        const assignments = await this.fetchByTitle(title);
 
-        if (pages.length === 0) {
+        if (assignments.length === 0) {
             await this.create(title, content, settings);
-        } else if (pages.length === 1) {
-            await this.update(pages[0].page_id, content, settings);
+        } else if (assignments.length === 1) {
+            await this.update(assignments[0].id, content, settings);
         } else {
             throw new Error(`The page search returned > 1 assignment for "${title}"`);
         }
