@@ -10,7 +10,7 @@ const extensions = await PathUtils.loadExtensions("./content/resources/extension
 
 export default class Parser {
 
-    constructor(options) {
+    constructor(options = {}) {
 
         this.options = options;
 

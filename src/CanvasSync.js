@@ -6,17 +6,17 @@ import PathUtils from "./utils/PathUtils.js";
 import Logger from "./utils/Logger.js";
 import Parser from "./Parser.js";
 
+const defaults = {
+    canvasApiUrl: "",
+    canvasApiToken: "",
+    canvasCourseId: ""
+};
+
 export default class CanvasSync {
 
     constructor(options = {}) {
 
-        const defaults = {
-            canvasApiUrl: "",
-            canvasApiToken: "",
-            canvasCourseId: ""
-        };
-
-        options = { ...defaults, ...options };
+        this.options = { ...defaults, ...options };
 
         PathUtils.createFolders("./content/pages");
         PathUtils.createFolders("./content/assignments");
@@ -25,7 +25,7 @@ export default class CanvasSync {
         PathUtils.createFolders("./content/resources/templates");
         PathUtils.createFolders("./content/resources/templates/partials");
 
-        this.parser = new Parser();
+        this.parser = new Parser(options);
 
         this.pageAPI = new PageAPI(options);
         this.assignmentAPI = new AssignmentAPI(options);
