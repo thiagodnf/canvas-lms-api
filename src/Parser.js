@@ -10,7 +10,9 @@ const extensions = await PathUtils.loadExtensions("./content/resources/extension
 
 export default class Parser {
 
-    constructor() {
+    constructor(options) {
+
+        this.options = options;
 
         this.converter = new showdown.Converter({
             ghCompatibleHeaderId: true,
@@ -63,7 +65,13 @@ export default class Parser {
 
         for (const file of files.values()) {
 
-            Object.assign(file, this.makeHtml(file.content));
+            const view = {
+                courseId: this.options.canvasCourseId
+            };
+
+            const rendered = mustache.render(file.content, view, partials);
+
+            Object.assign(file, this.makeHtml(rendered));
 
             const { styles, template } = file.metadata;
 
