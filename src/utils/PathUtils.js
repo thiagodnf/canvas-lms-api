@@ -73,7 +73,7 @@ export default class PathUtils {
 
     static saveToDisk(resourceName, filename, fileContent = "") {
 
-        const outputFolder = `./.html/${resourceName.toLowerCase()}/`;
+        const outputFolder = `./.html/${resourceName.toLowerCase()}`;
 
         const outputFile = `${outputFolder}/${filename}.html`;
 
