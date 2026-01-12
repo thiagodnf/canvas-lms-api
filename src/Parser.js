@@ -2,6 +2,7 @@ import showdown from "showdown";
 import juice from "juice";
 import yaml from "js-yaml";
 import mustache from "mustache";
+import sass from "sass";
 import showdownHighlight from "showdown-highlight";
 
 import PathUtils from "./utils/PathUtils.js";
@@ -25,6 +26,16 @@ export default class Parser {
         this.cssMap = PathUtils.readFolder('./content/resources/styles/**.**');
         this.templateMap = PathUtils.readFolder('./content/resources/templates/**.**');
         this.partialsMap = PathUtils.readFolder('./content/resources/templates/partials/**.**');
+
+        for (const file of cssMap.values()) {
+
+            if (file.extension !== ".scss") continue;
+
+            const { css } = sass.compileString(file.content);
+
+            file.extension = ".css";
+            file.content = css;
+        }
     }
 
     applyTemplate({ metadata }) {
