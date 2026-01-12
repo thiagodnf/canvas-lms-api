@@ -27,14 +27,11 @@ export default class Parser {
         this.templateMap = PathUtils.readFolder('./content/resources/templates/**.**');
         this.partialsMap = PathUtils.readFolder('./content/resources/templates/partials/**.**');
 
-        for (const file of cssMap.values()) {
+        for (const file of this.cssMap.values()) {
 
             if (file.extension !== ".scss") continue;
 
-            const { css } = sass.compileString(file.content);
-
-            file.extension = ".css";
-            file.content = css;
+            file.content = sass.compileString(file.content).css;
         }
     }
 
