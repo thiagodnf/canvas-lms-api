@@ -75,7 +75,7 @@ export default class PathUtils {
 
         const output = `./.html/${resourceName.toLowerCase()}/${filename}.html`;
 
-        this.createFolders(`./.html`);
+        this.createFolders(output);
 
         writeFileSync(output, fileContent);
     }
